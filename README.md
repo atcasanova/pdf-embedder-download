@@ -2,21 +2,25 @@
 
 1. Open the website through burp
 
-2. Activate Intercept
+2. Enable **Intercept**
 
-3. Forward requests until you see a POST containing https://example.com/?pdfemb-serveurl=...
+3. Forward requests until you see a **POST** request to https://example.com/?pdfemb-serveurl=...
 
-4. Select this request
+4. Select that request
 
-6. In the panel below, right click the request and select "Copy as Curl (bash)"
+5. In the lower panel, right click the request and select **Copy as Curl (bash)**
 
-7. Paste it in bash, remove the `-i` flag, add `-o out.enc` in the end of the line, run it
+6. Paste it in bash, remove the `-i` flag, add `-o out.enc` at the end, run it
 
-8. Turn off Intercept
+7. Disable **Intercept**
 
-9. Navigate to the originaal page where the PDF is displayed, open DevTools, Console; type in the console: `pdfemb_trans.k`. This is the RC4 key used to encrypt the file
+8. Go back to the original page where the PDF is embedded, **DevTools → Console** and type: 
+ ```js
+pdfemb_trans.k
+```
+to retrieve RC4 key used to encrypt the file
 
-10. Use this script:
+9. Use this script:
 
 ```python
 #!/usr/bin/env python3
@@ -68,7 +72,7 @@ if __name__ == "__main__":
 
 like this:
 
-`python3 decrypt.py <pdfemb_trans.k value> <out.enc> <filename.pdf>`
+`python3 decrypt.py RC4_KEY out.enc filename.pdf`
 
 that's it :)
 
